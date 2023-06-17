@@ -1,38 +1,159 @@
+body {
+  margin: 0%;
+  padding: 0%;
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+  flex: 30%;
+  background-color: darkgray;
+  width: 100%;
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+}
+
+.header .input-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.header input {
+  padding: 10px;
+  margin: 5px;
+  width: 200px;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+}
+
+.header button {
+  padding: 5px;
+  margin: 5px;
+  width: 80px;
+  height: auto;
+  border: none;
+  border-radius: 8px;
+}
+
+.todolist {
+  flex: 70%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding-top: 50px;
+  flex-direction: column;
+}
+
+.task {
+  background-color: aliceblue;
+  width: 500px;
+  height: 50px;
+  display: flex;
+  color: black;
+  margin: 15px;
+}
+
+.task .content {
+  flex: 80%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.task .content .span {
+  display: grid;
+  place-items: center;
+  border: 1px solid white;
+  width: 100%;
+  height: 100%;
+  font-size: 18px;
+  border-right: none;
+}
+
+.task button {
+  flex: 20%;
+  height: 100%;
+  background-color: pink;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  z-index: 10;
+  position: relative;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.form-button {
+  margin: 20px 10px 20px 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  background-image: linear-gradient(
+    to right,
+    #77a1d3 0%,
+    #79cbca 51%,
+    #77a1d3 100%
+  );
+  margin: 10px;
+  padding: 15px 45px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 10px;
+  display: block;
 }
+
+.form-button:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+
+.login-container .form-container {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  padding: 40px;
+}
+
+label {
+  text-align: left;
+  padding: 10px;
+  font-size: small;
+}
+
+input {
+  margin: 10px;
+  box-sizing: border-box;
+  border: none;
+  padding: 15px 0 15px 15px;
+  border-radius: 8px;
+}
+
+.container {
+  background-color: whitesmoke;
+  margin: auto;
+  border-radius: 20px;
+  position: relative;
+}
+
