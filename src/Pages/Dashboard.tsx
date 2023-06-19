@@ -42,7 +42,7 @@ const Dashboard: FC = () => {
             <div className="input-container">
               <input
                 type="text"
-                placeholder="Task.."
+                placeholder="Add your task here"
                 name="name"
                 value={task}
                 onChange={handleChange}

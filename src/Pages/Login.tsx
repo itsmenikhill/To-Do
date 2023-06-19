@@ -1,20 +1,12 @@
-import React, { ChangeEvent, useState, useEffect, FormEventHandler } from "react";
+import React, { ChangeEvent, useState, useEffect, FormEventHandler, useContext } from "react";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
+import { MyContext } from "../Components/MyContext";
 
 const Login = () => {
 
-  interface Creds {
-    email: string;
-    password: string;
-  }
-
-  const ValidCreds:Creds = {
-    email: "nikhil@gmail.com",
-    password: "nikhil123"
-  }
-
   const navigate = useNavigate();
+  const ValidCreds = useContext(MyContext);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
