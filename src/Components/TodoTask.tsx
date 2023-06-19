@@ -1,5 +1,6 @@
 import React from "react";
 import { ITask } from "../Interfaces";
+import { FaTrash } from "react-icons/fa";
 
 interface Props {
   task: ITask;
@@ -7,14 +8,27 @@ interface Props {
 }
 
 const TodoTask = ({ task, completeTask }: Props) => {
-  return (
-    <div className="task">
-      <div className="content">
-        <span>{task.taskName}</span>
+  if (task.taskName !== "") {
+    return (
+      <div className="task">
+        <div className="content">
+          <span>{task.taskName}</span>
+        </div>
+        <button
+          onClick={() => {
+            completeTask(task.taskName);
+          }}
+        >
+          {<FaTrash />}
+        </button>
       </div>
-      <button onClick={ () => {completeTask(task.taskName)} }>X</button>
-    </div>
-  );
+    );
+  }
+  else{
+    return(
+      <div></div>
+    )
+  }
 };
 
 export default TodoTask;
