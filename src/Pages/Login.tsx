@@ -1,12 +1,12 @@
-import React, { ChangeEvent, useState, useEffect, FormEventHandler, useContext } from "react";
+import React, { ChangeEvent, useState, useContext } from "react";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
-import { MyContext } from "../Components/MyContext";
+import { AuthContext } from "../Components/AuthContext";
+import jwt from "jsonwebtoken";
 
 const Login = () => {
-
   const navigate = useNavigate();
-  const ValidCreds = useContext(MyContext);
+  const { ValidCreds, token, login, logout } = useContext(AuthContext);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -19,11 +19,32 @@ const Login = () => {
     }
   };
 
-  const handleClick = () => {
-    if(ValidCreds.email===email && ValidCreds.password===password){
+  const payload = {
+    email: ValidCreds.email,
+    password: ValidCreds.password,
+  };
+
+  const generateToken = (data: any) => {
+    const secretKey = "SECRET_KEY";
+    // const getToken = jwt.sign(data,null);
+    // console.log(getToken)
+    // return getToken;
+  };
+
+  const handleLogin = () => {
+    const validToken = generateToken(payload);
+    console.log(validToken)
+    const newPayload = {
+      email: email,
+      password: password,
+    }
+    console.log(email+" "+password)
+    const newToken = generateToken(newPayload);
+    if(validToken===newToken){
+      login(newToken);
       navigate("/dashboard")
     }
-  }
+  };
 
   return (
     <div className="container">
@@ -42,7 +63,9 @@ const Login = () => {
             name="password"
             onChange={handleChange}
           />
-          <button className="form-button" onClick={handleClick}>Login</button>
+          <button className="form-button" onClick={handleLogin}>
+            Login
+          </button>
         </form>
       </div>
     </div>
