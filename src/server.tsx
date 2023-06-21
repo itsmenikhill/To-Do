@@ -1,5 +1,6 @@
 import express, {Express, Request, Response} from "express";
 import jwt from "jsonwebtoken";
+import cors from "cors";
 
 const app = express();
 app.use(express.json());
@@ -15,6 +16,8 @@ const users: any = {
   email: "nikhil@gmail.com",
   password: "nikhil123",
 };
+
+app.use(cors());
 
 app.post("/api/login", (req, res) => {
   const { email, password } = req.body;

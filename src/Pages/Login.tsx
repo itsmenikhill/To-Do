@@ -3,12 +3,14 @@ import "../App.css";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Components/AuthContext";
 import jwt from "jsonwebtoken";
+import axios from "axios";
+import { useSignIn } from "react-auth-kit";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { ValidCreds, token, login, logout } = useContext(AuthContext);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const signIn = useSignIn();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     console.log(event.target.value);
@@ -19,30 +21,22 @@ const Login = () => {
     }
   };
 
-  const payload = {
-    email: ValidCreds.email,
-    password: ValidCreds.password,
-  };
-
-  const generateToken = (data: any) => {
-    const secretKey = "SECRET_KEY";
-    // const getToken = jwt.sign(data,null);
-    // console.log(getToken)
-    // return getToken;
-  };
-
-  const handleLogin = () => {
-    const validToken = generateToken(payload);
-    console.log(validToken)
-    const newPayload = {
-      email: email,
-      password: password,
+  const handleLogin = async (values: any) => {
+    console.log("Values", values)
+    const response = await axios.post("http://localhost:8000/api/login", values);
+    console.log("response:", response)
+    try{
+      signIn({
+        token: response.data.token,
+        expiresIn: 3600,
+        tokenType:"Bearer",
+        authState: {email: values.email}
+      })
     }
-    console.log(email+" "+password)
-    const newToken = generateToken(newPayload);
-    if(validToken===newToken){
-      login(newToken);
-      navigate("/dashboard")
+    catch(err){
+      if(err){
+        console.log(err);
+      }
     }
   };
 
@@ -63,7 +57,7 @@ const Login = () => {
             name="password"
             onChange={handleChange}
           />
-          <button className="form-button" onClick={handleLogin}>
+          <button className="form-button" onClick={(e)=>handleLogin({email, password})}>
             Login
           </button>
         </form>

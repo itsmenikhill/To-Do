@@ -10,9 +10,12 @@
     "@types/jest": "^27.5.2",
     "@types/react": "^18.2.12",
     "@types/react-dom": "^18.2.5",
+    "axios": "^1.4.0",
+    "cors": "^2.8.5",
     "jsonwebtoken": "^9.0.0",
     "node-jsonwebtoken": "^0.0.1",
     "react": "^18.2.0",
+    "react-auth-kit": "^2.12.3",
     "react-dom": "^18.2.0",
     "react-icons": "^4.9.0",
     "react-router-dom": "^6.13.0",
@@ -45,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/node": "^20.3.1",
