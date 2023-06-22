@@ -23,7 +23,7 @@ app.post("/api/login", (req, res) => {
   const { email, password } = req.body;
 
   const user = users.find(
-    (user: any) => users.email === email && users.password === password
+    (item: boolean) => users.email === email && users.password === password
   );
   if (!user) {
     return res.status(401).json({ message: "Invalid credentials" });
@@ -36,7 +36,6 @@ app.post("/api/login", (req, res) => {
       expiresIn: "1h", // Token expiration time
     }
   );
-
   res.json({token})
 });
 
