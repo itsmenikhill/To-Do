@@ -59,6 +59,7 @@ const Dashboard: FC = () => {
                   key={key}
                   task={task}
                   completeTask={completeTask}
+                  // changeStatus={changeStatus}
                 ></TodoTask>
               );
             })}
