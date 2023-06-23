@@ -38,7 +38,7 @@ const Dashboard: FC = () => {
         </div>
         <div className="app-container">
           <div className="header">
-            <h2 className="app-heading">ToDo App</h2>
+            <h2 className="app-heading">ToDo List</h2>
             <div className="input-container">
               <input
                 type="text"

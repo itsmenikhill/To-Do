@@ -5,7 +5,6 @@ import { FaCheck, FaTrash } from "react-icons/fa";
 interface Props {
   task: ITask;
   completeTask(taskNameToDelete: string): void;
-  // changeStatus(taskName: string): void;
 }
 
 const TodoTask = ({ task, completeTask }: Props) => {
