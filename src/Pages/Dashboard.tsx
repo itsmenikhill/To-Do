@@ -17,14 +17,9 @@ const Dashboard: FC = () => {
     }
   };
 
-  // const taskItem: ITask {
-  //   taskName: taskName;
-  //   isDone: isDone;
-  // }
-
   const addTask = () => {
     const newTask = { taskName: task, isDone: isDone };
-    setTodoList([...todoList, newTask]);
+    setTodoList([newTask, ...todoList]);
     setTask("");
   };
 

@@ -10,6 +10,8 @@ body {
   );
   background-repeat: no-repeat;
   height: 100vh;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
 }
 
 *::-webkit-scrollbar {
@@ -63,8 +65,6 @@ body {
 
 .app-heading {
   margin: 55px 0px 0px 55px;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
 }
 
 .header {
@@ -78,6 +78,7 @@ body {
 }
 
 .header input {
+  font-size: medium;
   flex: 85%;
   padding: 10px;
   margin: 5px;
@@ -94,7 +95,7 @@ body {
   width: 80px;
   height: auto;
   border: none;
-  background-color: #318CE7;
+  background-color: #318ce7;
 }
 
 .task-container {
@@ -122,6 +123,7 @@ body {
 
 .task .content {
   flex: 77%;
+  font-size: medium ;
   background-color: white;
   width: 300px;
   padding: 10px;
@@ -143,7 +145,7 @@ body {
   text-decoration: line-through;
 }
 
-.task .notDone{
+.task .notDone {
   background-color: rgb(255, 255, 255);
   flex: 9%;
   padding: 5px;
@@ -153,7 +155,7 @@ body {
   border: none;
 }
 
-.task .done{
+.task .done {
   background-color: rgb(117, 239, 121);
   flex: 9%;
   padding: 5px;
@@ -173,7 +175,7 @@ body {
   border: none;
 }
 
-button:hover{
+button:hover {
   cursor: pointer;
 }
 
@@ -221,7 +223,7 @@ button:hover{
 }
 
 .form-button:hover {
-  background-position: right center; 
+  background-position: right center;
   color: #fff;
   text-decoration: none;
 }
@@ -253,7 +255,8 @@ input {
 }
 
 .login-heading {
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
   margin-right: 10px;
 }
 
