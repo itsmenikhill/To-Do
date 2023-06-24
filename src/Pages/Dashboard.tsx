@@ -16,7 +16,7 @@ const Dashboard: FC = () => {
       setTask(event.target.value);
     }
   };
-  
+
   // const taskItem: ITask {
   //   taskName: taskName;
   //   isDone: isDone;
@@ -58,16 +58,18 @@ const Dashboard: FC = () => {
               </button>
             </div>
           </div>
-          <div className="todolist">
-            {todoList.map((task: ITask, key: number) => {
-              return (
-                <TodoTask
-                  key={key}
-                  task={task}
-                  completeTask={completeTask}
-                ></TodoTask>
-              );
-            })}
+          <div className="task-container">
+            <div className="todolist">
+              {todoList.map((task: ITask, key: number) => {
+                return (
+                  <TodoTask
+                    key={key}
+                    task={task}
+                    completeTask={completeTask}
+                  ></TodoTask>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
