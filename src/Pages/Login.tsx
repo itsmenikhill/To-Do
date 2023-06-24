@@ -50,7 +50,7 @@ const Login = () => {
   // }
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    const login = handleLogin({email, password});
+    handleLogin({email, password});
     e.preventDefault()
   }
 

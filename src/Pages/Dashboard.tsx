@@ -8,6 +8,7 @@ import LogOut from "../Components/LogOut";
 const Dashboard: FC = () => {
   const [task, setTask] = useState<string>("");
   const [todoList, setTodoList] = useState<ITask[]>([]);
+  const isDone = false;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     console.log(event.target.value);
@@ -15,9 +16,14 @@ const Dashboard: FC = () => {
       setTask(event.target.value);
     }
   };
+  
+  // const taskItem: ITask {
+  //   taskName: taskName;
+  //   isDone: isDone;
+  // }
 
   const addTask = () => {
-    const newTask = { taskName: task };
+    const newTask = { taskName: task, isDone: isDone };
     setTodoList([...todoList, newTask]);
     setTask("");
   };
@@ -59,7 +65,6 @@ const Dashboard: FC = () => {
                   key={key}
                   task={task}
                   completeTask={completeTask}
-                  // changeStatus={changeStatus}
                 ></TodoTask>
               );
             })}

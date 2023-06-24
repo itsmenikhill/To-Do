@@ -9,25 +9,24 @@ interface Props {
 
 const TodoTask = ({ task, completeTask }: Props) => {
   const [isDone, setIsDone] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
   if (task.taskName !== "") {
     return (
       <div className="task">
-        <div className={isDone ? "dashedContent" : "content"}>
+        <div className= {task.isDone ? "dashedContent":"content"}>
           <span>{task.taskName}</span>
         </div>
         <button
-          className= { isChecked ? "done" : "notDone"}
+          className={task.isDone ? "done":"notDone"}
           onClick={() => {
+            task.isDone = !task.isDone;
             setIsDone(!isDone);
-            setIsChecked(!isChecked);
           }}
         >
           {<FaCheck />}
         </button>
         <button
           onClick={() => {
-            completeTask(task.taskName);
+            completeTask(task.taskName);  
           }}
         >
           {<FaTrash />}
