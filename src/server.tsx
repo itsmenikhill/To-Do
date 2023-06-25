@@ -10,11 +10,11 @@ app.use(express.json());
 
 const secretKey = "your_secret_key";
 const users: any = {
-  email: "nikhil@gmail.com",
-  password: "nikhil123",
+  email: "",
+  password: "",
 };
 const uri =
-  "mongodb+srv://nklsharma2152:TUDHsv0bIGQxfQ5S@cluster0.7nqqzdm.mongodb.net/?retryWrites=true&w=majority";
+  "";
 
 app.use(cors());
 
