@@ -4,6 +4,7 @@ import Dashboard from "./Pages/Dashboard";
 import Login from "./Pages/Login";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AuthProvider, RequireAuth } from "react-auth-kit";
+import SignIn from "./Pages/SignIn";
 
 const App: FC = () => {
   return (
@@ -18,6 +19,7 @@ const App: FC = () => {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/signin" element={<SignIn />} />
             <Route
               path="/dashboard"
               element={

@@ -1,8 +1,6 @@
-import React, { ChangeEvent, useState, useContext, FormEvent } from "react";
+import React, { ChangeEvent, useState, FormEvent } from "react";
 import "../App.css";
-import { Navigate, useNavigate } from "react-router-dom";
-import { AuthContext } from "../Components/AuthContext";
-import jwt from "jsonwebtoken";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSignIn } from "react-auth-kit";
 
@@ -13,7 +11,6 @@ const Login = () => {
   const signIn = useSignIn();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value);
     if (event.target.name === "email") {
       setEmail(event.target.value);
     } else {
@@ -24,7 +21,7 @@ const Login = () => {
   const handleLogin = async (values: any) => {
     console.log("Values", values);
     const response = await axios.post(
-      "http://localhost:8000/api/login",
+      "http://localhost:8000/login",
       values
     );
     console.log("response:", response);
@@ -45,10 +42,6 @@ const Login = () => {
     }
   };
 
-  // const loginSubmit = async (email, password) => {
-    
-  // }
-
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     handleLogin({email, password});
     e.preventDefault()
@@ -57,7 +50,7 @@ const Login = () => {
   return (
     <div className="container">
       <div className="login-container">
-        <h2 className="login-heading">Sign In</h2>
+        <h2 className="form-heading">Log In</h2>
         <form className="form-container" onSubmit={handleSubmit}>
           <input
             type="text"
