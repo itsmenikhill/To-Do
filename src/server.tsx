@@ -1,22 +1,23 @@
 import express, { Express, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import cors from "cors";
+import cors from "cors"; 
 import { MongoClient } from "mongodb";
 import { v4 as uuidv4 } from "uuid";
 import * as bcrypt from "bcrypt";
+import 'dotenv/config';
+// dotenv.config();
 
 const app = express();
 app.use(express.json());
 
 const secretKey = "your_secret_key";
-const users: any = {
-  email: "nikhil@gmail.com",
-  password: "nikhil123",
-};
-const uri =
-  "mongodb+srv://nklsharma2152:TUDHsv0bIGQxfQ5S@cluster0.7nqqzdm.mongodb.net/?retryWrites=true&w=majority";
+const uri: any = process.env.MONGO_URI;
 
 app.use(cors());
+
+app.get("/", (req, res)=>{
+  res.send(uri);
+})
 
 app.post("/api/signup", async (req, res) => {
   const client = new MongoClient(uri);
@@ -38,6 +39,7 @@ app.post("/api/signup", async (req, res) => {
       user_id: generatedUserId,
       email: sanitizedEmail,
       hashed_password: hashedPassword,
+      tasks: []
     };
     const insertedUser = await users.insertOne(data);
     const token = jwt.sign(insertedUser, sanitizedEmail, {
@@ -59,6 +61,7 @@ app.post("/login", async (req, res) => {
     const users = database.collection("users");
 
     const user = await users.findOne({ email });
+    console.log(user);
     const correctPassword = await bcrypt.compare(
       password,
       user!.hashed_password
@@ -81,7 +84,28 @@ app.post("/login", async (req, res) => {
   }
 });
 
-const port = 8000;
+app.post("/addtask", async (req,res) => {
+  const client = new MongoClient(uri);
+  const { email, task } = req.body;
+
+  try {
+    await client.connect();
+    const database = client.db("registered");
+    const users = database.collection("users");
+    // const user: any = await users.findOne({ email });
+    const update = await users.updateOne(
+      {email: email},
+      {$push: { tasks: task }}
+    )
+    .then(res=>{"request completed"})
+    res.send(res);
+  }
+  catch(err){
+    res.send(err)
+  }
+})
+
+const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
