@@ -6,7 +6,9 @@ const SignIn = () => {
   const [password, setPassword] = useState<string>("");
   const [name, setName] = useState("");
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    
+  };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     console.log(event.target.value);
