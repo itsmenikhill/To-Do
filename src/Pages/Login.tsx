@@ -34,7 +34,7 @@ const Login = () => {
           authState: { email: values.email },
         })
       )
-        navigate("/dashboard")
+        navigate("/dashboard", {state:{email: email}})
     } catch (err) {
       if (err) {
         console.log(err);

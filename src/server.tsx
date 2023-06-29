@@ -92,8 +92,7 @@ app.post("/addtask", async (req,res) => {
     await client.connect();
     const database = client.db("registered");
     const users = database.collection("users");
-    // const user: any = await users.findOne({ email });
-    const update = await users.updateOne(
+    await users.updateOne(
       {email: email},
       {$push: { tasks: task }}
     )

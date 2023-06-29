@@ -7,7 +7,7 @@ const SignIn = () => {
   const [name, setName] = useState("");
 
   const handleSubmit = () => {
-    
+
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {

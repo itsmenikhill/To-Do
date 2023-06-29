@@ -4,11 +4,15 @@ import { ITask } from "../Interfaces";
 import TodoTask from "../Components/TodoTask";
 import { FaPlus } from "react-icons/fa";
 import LogOut from "../Components/LogOut";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 const Dashboard: FC = () => {
   const [task, setTask] = useState<string>("");
   const [todoList, setTodoList] = useState<ITask[]>([]);
   const isDone = false;
+  const location = useLocation();
+  const email = location.state.email;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     console.log(event.target.value);
@@ -17,8 +21,10 @@ const Dashboard: FC = () => {
     }
   };
 
-  const addTask = () => {
+  const addTask = async (value: any) => {
     const newTask = { taskName: task, isDone: isDone };
+    const response = await axios.post("http://localhost:8000/addtask", value);
+    console.log(response);
     setTodoList([newTask, ...todoList]);
     setTask("");
   };
@@ -48,7 +54,7 @@ const Dashboard: FC = () => {
                 value={task}
                 onChange={handleChange}
               />
-              <button onClick={addTask}>
+              <button onClick={()=>addTask({email, task})}>
                 <FaPlus />
               </button>
             </div>
