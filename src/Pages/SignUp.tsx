@@ -1,27 +1,38 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import "../App.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { isNull } from "util";
+import { useSignIn } from "react-auth-kit";
 
 const SignUp = () => {
+  const signIn = useSignIn();
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [name, setName] = useState("");
 
-  const handleSubmit = async (values: any) => {
+  const handleSignup = async (values: any) => {
     const response = await axios.post("http://localhost:8000/signup", values);
     console.log("response: ", response)
-    try {
-      if (response!==null)
+    try{
+      if (
+        signIn({
+          token: response.data.token,
+          expiresIn: 3600,
+          tokenType: "Bearer",
+          authState: { email: values.email },
+        })
+        )
         navigate("/dashboard", {state:{email: email}})
     } catch (err) {
-      if (err) {
-        console.log(err);
-      }
+      console.log(err)
     }
   };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    handleSignup({email, password});
+    e.preventDefault()
+  }
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     console.log(event.target.value);
@@ -39,7 +50,7 @@ const SignUp = () => {
       <div className="container">
         <div className="login-container">
           <h2 className="form-heading">Sign Up</h2>
-          <form className="form-container" onSubmit={()=>handleSubmit({email: email, password: password})}>
+          <form className="form-container" onSubmit={handleSubmit}>
             <input type="text" placeholder="Your name" name="name" onChange={handleChange} />
             <input
               type="text"
