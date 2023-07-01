@@ -19,7 +19,7 @@ app.get("/", (req, res)=>{
   res.send(uri);
 })
 
-app.post("/api/signup", async (req, res) => {
+app.post("/signup", async (req, res) => {
   const client = new MongoClient(uri);
   const { email, password } = req.body;
   const generatedUserId = uuidv4();
@@ -45,7 +45,7 @@ app.post("/api/signup", async (req, res) => {
     const token = jwt.sign(insertedUser, sanitizedEmail, {
       expiresIn: 60 * 24,
     });
-    res.status(201).json({ token, userId: generatedUserId });
+    res.status(201).json({ token, userId: generatedUserId, status:"inserted" });
   } catch (err) {
     console.log(err);
   }
