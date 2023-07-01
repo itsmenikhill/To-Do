@@ -272,3 +272,9 @@ input {
   width: 75px;
   border-radius: 8px;
 }
+
+.registration-link .link{
+  font-weight: normal;
+  text-decoration: none;
+  color: rgb(93, 91, 91);
+}

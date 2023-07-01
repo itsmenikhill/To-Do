@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState, FormEvent } from "react";
 import "../App.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSignIn } from "react-auth-kit";
 
@@ -20,10 +20,7 @@ const Login = () => {
 
   const handleLogin = async (values: any) => {
     console.log("Values", values);
-    const response = await axios.post(
-      "http://localhost:8000/login",
-      values
-    );
+    const response = await axios.post("http://localhost:8000/login", values);
     console.log("response:", response);
     try {
       if (
@@ -34,7 +31,7 @@ const Login = () => {
           authState: { email: values.email },
         })
       )
-        navigate("/dashboard", {state:{email: email}})
+        navigate("/dashboard", { state: { email: email } });
     } catch (err) {
       if (err) {
         console.log(err);
@@ -43,9 +40,9 @@ const Login = () => {
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    handleLogin({email, password});
-    e.preventDefault()
-  }
+    handleLogin({ email, password });
+    e.preventDefault();
+  };
 
   return (
     <div className="container">
@@ -64,13 +61,11 @@ const Login = () => {
             name="password"
             onChange={handleChange}
           />
-          <button
-            className="form-button"
-            // onClick={(e) => handleLogin({ email, password })}
-          >
-            Login
-          </button>
+          <button className="form-button">Login</button>
         </form>
+        <div className="registration-link">
+          <Link className="link" to="/signup">New user? Create an account</Link>
+        </div> 
       </div>
     </div>
   );
