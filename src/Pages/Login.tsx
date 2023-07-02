@@ -63,7 +63,7 @@ const Login = () => {
           />
           <button className="form-button">Login</button>
         </form>
-        <div className="registration-link">
+        <div className="redirect-link">
           <Link className="link" to="/signup">New user? Create an account</Link>
         </div> 
       </div>
