@@ -199,6 +199,17 @@ button:hover {
   position: relative;
 }
 
+.signup-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  padding-bottom: 24px;
+  z-index: 10;
+  position: relative;
+}
+
 .form-button {
   border: none;
   border-radius: 20px;
@@ -233,6 +244,13 @@ button:hover {
   padding: 40px;
 }
 
+.signup-container .form-container {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  padding: 40px;
+}
+
 label {
   text-align: left;
   padding: 10px;
@@ -256,6 +274,7 @@ input {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
   margin-right: 10px;
+
 }
 
 .logout-app {
@@ -278,7 +297,14 @@ input {
   text-decoration: none;
   color: rgb(93, 91, 91);
 }
+
 .login-container .redirect-link .login-link{
+  font-weight: normal;
+  text-decoration: none;
+  color: rgb(93, 91, 91);
+}
+
+.signup-container .redirect-link .login-link{
   font-weight: normal;
   text-decoration: none;
   color: rgb(93, 91, 91);
