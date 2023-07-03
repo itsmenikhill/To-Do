@@ -86,7 +86,7 @@ app.post("/login", async (req, res) => {
 
 app.post("/addtask", async (req,res) => {
   const client = new MongoClient(uri);
-  const { email, task } = req.body;
+  const { email, task, isDone } = req.body;
 
   try {
     await client.connect();
@@ -94,7 +94,7 @@ app.post("/addtask", async (req,res) => {
     const users = database.collection("users");
     await users.updateOne(
       {email: email},
-      {$push: { tasks: task }}
+      {$push: { tasks: {task, isDone} }}
     )
     .then(res=>{"request completed"})
     res.send(res);
