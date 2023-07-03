@@ -92,11 +92,12 @@ app.post("/addtask", async (req,res) => {
     await client.connect();
     const database = client.db("registered");
     const users = database.collection("users");
-    await users.updateOne(
+    const response = await users.updateOne(
       {email: email},
-      {$push: { tasks: {task, isDone} }}
+      {$push: { tasks: [task, isDone] }}
     )
     .then(res=>{"request completed"})
+    console.log(response)
     res.send(res);
   }
   catch(err){
