@@ -5,7 +5,6 @@ import { MongoClient } from "mongodb";
 import { v4 as uuidv4 } from "uuid";
 import * as bcrypt from "bcrypt";
 import 'dotenv/config';
-// dotenv.config();
 
 const app = express();
 app.use(express.json());
@@ -94,7 +93,7 @@ app.post("/addtask", async (req,res) => {
     const users = database.collection("users");
     const response = await users.updateOne(
       {email: email},
-      {$push: { tasks: [task, isDone] }}
+      {$push: { tasks: {task, isDone} }}
     )
     .then(res=>{"request completed"})
     console.log(response)
@@ -102,6 +101,22 @@ app.post("/addtask", async (req,res) => {
   }
   catch(err){
     res.send(err)
+  }
+})
+
+app.get("/getTasks", async (req, res)=>{
+  const email = req.body;
+  const client = new MongoClient(uri);
+  try{
+    await client.connect();
+    const database = client.db("registered")
+    const users = database.collection("users")
+    const user = await users.findOne({email})
+    const tasks = user!.tasks;
+    res.send(tasks)
+  }
+  catch(err){
+    res.send("error")
   }
 })
 
