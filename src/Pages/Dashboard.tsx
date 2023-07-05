@@ -1,11 +1,11 @@
-import React, { FC, useState, ChangeEvent } from "react";
+import React, { FC, useState, ChangeEvent, useEffect } from "react";
 import "../App.css";
 import { ITask } from "../Interfaces";
 import TodoTask from "../Components/TodoTask";
 import { FaPlus } from "react-icons/fa";
 import LogOut from "../Components/LogOut";
 import { useLocation } from "react-router-dom";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 const Dashboard: FC = () => {
   const [task, setTask] = useState<string>("");
@@ -17,7 +17,24 @@ const Dashboard: FC = () => {
   // on load of this Dashboard component, call api to get all tasks from db
   // and set it as todolist
   // on addTask call, set the todolist and insert the item in the db as well
-  // same when task is deleted
+  // same when task is deleted  
+
+  useEffect(()=>{
+    onLoad(email)
+  }, [])
+
+  const onLoad = async (email: any) =>{
+    const tasks = await axios.get("http://localhost:8000/gettasks", email);
+    const newItaskArr = [];
+    // getting the items from the response and converting in a ITask array and setting the todolist
+    for(let i=0; i<tasks.data.length; i++){
+      const taskName:string = tasks.data[i].task;
+      const isDone:boolean = tasks.data[i].isDone;
+      const newTask:ITask = {taskName, isDone}
+      newItaskArr.unshift(newTask)
+    }
+    setTodoList(newItaskArr);
+  }
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     console.log(event.target.value);
@@ -30,16 +47,17 @@ const Dashboard: FC = () => {
     const newTask = { taskName: value.task, isDone: value.isDone };
     const response = await axios.post("http://localhost:8000/addtask", value);
     console.log(response);
-    setTodoList([newTask, ...todoList]);
+    // setTodoList([newTask, ...todoList]);
+    onLoad(email);
     setTask("");
   };
 
   const completeTask = (taskToDelete: string): void => {
-    setTodoList(
-      todoList.filter((task) => {
-        return task.taskName !== taskToDelete;
-      })
-    );
+    // setTodoList(
+    //   todoList.filter((task) => {
+    //     return task.taskName !== taskToDelete;
+    //   })
+    // );
   };
 
   return (
