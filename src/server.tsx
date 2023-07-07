@@ -95,9 +95,8 @@ app.post("/addtask", async (req,res) => {
       {email: email},
       {$push: { tasks: {task, isDone} }}
     )
-    .then(res=>{"request completed"})
+    .then(()=>{res.send("request completed")})
     console.log(response)
-    res.send(res);
   }
   catch(err){
     res.send(err)
@@ -117,6 +116,29 @@ app.get("/getTasks", async (req, res)=>{
   }
   catch(err){
     res.send("error")
+  }
+})
+
+app.post("/deleteTask", async (req,res) => {
+  const client = new MongoClient(uri);
+  const { email, toDelete } = req.body;
+  try{
+    await client.connect();
+    const database = client.db("registered")
+    const users = database.collection("users")
+    const user = await users.findOne(email)
+    const taskList = user!.tasks;
+    const response = (taskList: any, task: string, toDelete: string) => {
+      let i = taskList.length()
+      while(i--){
+        if(taskList[i] && taskList[i].hasOwnProperty(task) && taskList[i][task] === toDelete){
+          taskList.splice(i, 1);
+        }
+      }
+    }
+  }
+  catch(err){
+    res.send(err)
   }
 })
 

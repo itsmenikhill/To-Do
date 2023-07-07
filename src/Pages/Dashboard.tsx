@@ -52,7 +52,7 @@ const Dashboard: FC = () => {
     setTask("");
   };
 
-  const completeTask = (taskToDelete: string): void => {
+  const completeTask = (ToDelete: string): void => {
     // setTodoList(
     //   todoList.filter((task) => {
     //     return task.taskName !== taskToDelete;
