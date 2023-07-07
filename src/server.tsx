@@ -124,26 +124,12 @@ app.post("/deleteTask", async (req, res) => {
     await client.connect();
     const database = client.db("registered");
     const users = database.collection("users");
-    const user = await users.findOne(email);
+    const user = await users.findOne({email});
     const taskList = user!.tasks;
-    console.log(taskList);
-    const response = getAttr(taskList, "task", toDelete)
-    // .then(()=>res.send("task deleted"))
-    console.log(response)
   } catch (err) {
     res.send(err);
   }
 });
-
-const getAttr = (arr: any, attr: string, value: string) => {
-  var i = arr.length;
-  while (i--) {
-    if (arr[i] && arr[i].hasOwnProperty(attr) && arr[i][attr] === value) {
-      arr.splice(i, 1);
-    }
-  }
-  return arr;
-};
 
 const port = process.env.PORT;
 app.listen(port, () => {
