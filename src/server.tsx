@@ -1,10 +1,10 @@
 import express, { Express, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import cors from "cors"; 
+import cors from "cors";
 import { MongoClient } from "mongodb";
 import { v4 as uuidv4 } from "uuid";
 import * as bcrypt from "bcrypt";
-import 'dotenv/config';
+import "dotenv/config";
 
 const app = express();
 app.use(express.json());
@@ -14,9 +14,9 @@ const uri: any = process.env.MONGO_URI;
 
 app.use(cors());
 
-app.get("/", (req, res)=>{
+app.get("/", (req, res) => {
   res.send(uri);
-})
+});
 
 app.post("/signup", async (req, res) => {
   const client = new MongoClient(uri);
@@ -38,13 +38,15 @@ app.post("/signup", async (req, res) => {
       user_id: generatedUserId,
       email: sanitizedEmail,
       hashed_password: hashedPassword,
-      tasks: []
+      tasks: [],
     };
     const insertedUser = await users.insertOne(data);
     const token = jwt.sign(insertedUser, sanitizedEmail, {
       expiresIn: 60 * 24,
     });
-    res.status(201).json({ token, userId: generatedUserId, status:"inserted" });
+    res
+      .status(201)
+      .json({ token, userId: generatedUserId, status: "inserted" });
   } catch (err) {
     console.log(err);
   }
@@ -71,11 +73,9 @@ app.post("/login", async (req, res) => {
         expiresIn: 60 * 24,
       });
       res.status(201).json({ token, userId: user.user_id });
-    }
-    else{
+    } else {
       res.status(400).json("Invalid Credentials");
     }
-
   } catch (err) {
     console.log(err);
   } finally {
@@ -83,7 +83,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.post("/addtask", async (req,res) => {
+app.post("/addtask", async (req, res) => {
   const client = new MongoClient(uri);
   const { email, task, isDone } = req.body;
 
@@ -91,56 +91,59 @@ app.post("/addtask", async (req,res) => {
     await client.connect();
     const database = client.db("registered");
     const users = database.collection("users");
-    const response = await users.updateOne(
-      {email: email},
-      {$push: { tasks: {task, isDone} }}
-    )
-    .then(()=>{res.send("request completed")})
-    console.log(response)
+    const response = await users
+      .updateOne({ email: email }, { $push: { tasks: { task, isDone } } })
+      .then(() => {
+        res.send("request completed");
+      });
+    console.log(response);
+  } catch (err) {
+    res.send(err);
   }
-  catch(err){
-    res.send(err)
-  }
-})
+});
 
-app.get("/getTasks", async (req, res)=>{
+app.get("/getTasks", async (req, res) => {
   const email = req.body;
   const client = new MongoClient(uri);
-  try{
+  try {
     await client.connect();
-    const database = client.db("registered")
-    const users = database.collection("users")
-    const user = await users.findOne({email})
+    const database = client.db("registered");
+    const users = database.collection("users");
+    const user = await users.findOne({ email });
     const tasks = user!.tasks;
-    res.send(tasks)
+    res.send(tasks);
+  } catch (err) {
+    res.send("error");
   }
-  catch(err){
-    res.send("error")
-  }
-})
+});
 
-app.post("/deleteTask", async (req,res) => {
+app.post("/deleteTask", async (req, res) => {
   const client = new MongoClient(uri);
   const { email, toDelete } = req.body;
-  try{
+  try {
     await client.connect();
-    const database = client.db("registered")
-    const users = database.collection("users")
-    const user = await users.findOne(email)
+    const database = client.db("registered");
+    const users = database.collection("users");
+    const user = await users.findOne(email);
     const taskList = user!.tasks;
-    const response = (taskList: any, task: string, toDelete: string) => {
-      let i = taskList.length()
-      while(i--){
-        if(taskList[i] && taskList[i].hasOwnProperty(task) && taskList[i][task] === toDelete){
-          taskList.splice(i, 1);
-        }
-      }
+    console.log(taskList);
+    const response = getAttr(taskList, "task", toDelete)
+    // .then(()=>res.send("task deleted"))
+    console.log(response)
+  } catch (err) {
+    res.send(err);
+  }
+});
+
+const getAttr = (arr: any, attr: string, value: string) => {
+  var i = arr.length;
+  while (i--) {
+    if (arr[i] && arr[i].hasOwnProperty(attr) && arr[i][attr] === value) {
+      arr.splice(i, 1);
     }
   }
-  catch(err){
-    res.send(err)
-  }
-})
+  return arr;
+};
 
 const port = process.env.PORT;
 app.listen(port, () => {
