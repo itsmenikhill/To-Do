@@ -124,8 +124,12 @@ app.post("/deleteTask", async (req, res) => {
     await client.connect();
     const database = client.db("registered");
     const users = database.collection("users");
-    const user = await users.findOne({email});
+    const user = await users.findOne({ email });
     const taskList = user!.tasks;
+    console.log(taskList);
+    const response = await users
+      .updateOne({ email: email }, { $pull: { tasks: { task: toDelete } } })
+      .then(() => res.send("task deleted"));
   } catch (err) {
     res.send(err);
   }
