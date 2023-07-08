@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { ITask } from "../Interfaces";
 import { FaCheck, FaTrash } from "react-icons/fa";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 interface Props {
   task: ITask;
@@ -8,15 +10,24 @@ interface Props {
 }
 
 const TodoTask = ({ task, completeTask }: Props) => {
+  const location = useLocation();
   const [isDone, setIsDone] = useState(false);
+  
+  const deleteTask = async () => {
+    const email = location.state.email;
+    const toDelete = task.taskName;
+    const response = await axios.post("http://localhost:8000/deleteTask", {email, toDelete});
+    console.log(response);
+  };
+
   if (task.taskName !== "") {
     return (
       <div className="task">
-        <div className= {task.isDone ? "dashedContent":"content"}>
+        <div className={task.isDone ? "dashedContent" : "content"}>
           <span>{task.taskName}</span>
         </div>
         <button
-          className={task.isDone ? "done":"notDone"}
+          className={task.isDone ? "done" : "notDone"}
           onClick={() => {
             task.isDone = !task.isDone;
             setIsDone(!isDone);
@@ -26,7 +37,8 @@ const TodoTask = ({ task, completeTask }: Props) => {
         </button>
         <button
           onClick={() => {
-            completeTask(task.taskName);  
+            deleteTask();
+            completeTask(task.taskName);
           }}
         >
           {<FaTrash />}

@@ -46,18 +46,17 @@ const Dashboard: FC = () => {
   const addTask = async (value: any) => {
     const newTask = { taskName: value.task, isDone: value.isDone };
     const response = await axios.post("http://localhost:8000/addtask", value);
-    console.log(response);
-    // setTodoList([newTask, ...todoList]);
-    onLoad(email);
+    console.log(response)
+    setTodoList([newTask, ...todoList]);
     setTask("");
   };
 
-  const completeTask = (ToDelete: string): void => {
-    // setTodoList(
-    //   todoList.filter((task) => {
-    //     return task.taskName !== taskToDelete;
-    //   })
-    // );
+  const completeTask = (taskToDelete: string): void => {
+    setTodoList(
+      todoList.filter((task) => {
+        return task.taskName !== taskToDelete;
+      })
+    );
   };
 
   return (

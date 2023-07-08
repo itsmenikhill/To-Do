@@ -127,7 +127,7 @@ app.post("/deleteTask", async (req, res) => {
     const user = await users.findOne({ email });
     const taskList = user!.tasks;
     console.log(taskList);
-    const response = await users
+    await users
       .updateOne({ email: email }, { $pull: { tasks: { task: toDelete } } })
       .then(() => res.send("task deleted"));
   } catch (err) {
