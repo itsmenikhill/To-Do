@@ -17,24 +17,24 @@ const Dashboard: FC = () => {
   // on load of this Dashboard component, call api to get all tasks from db
   // and set it as todolist
   // on addTask call, set the todolist and insert the item in the db as well
-  // same when task is deleted  
+  // same when task is deleted
 
-  useEffect(()=>{
-    onLoad(email)
-  }, [])
+  useEffect(() => {
+    onLoad(email);
+  }, []);
 
-  const onLoad = async (email: any) =>{
+  const onLoad = async (email: any) => {
     const tasks = await axios.get("http://localhost:8000/gettasks", email);
     const newItaskArr = [];
     // getting the items from the response and converting in a ITask array and setting the todolist
-    for(let i=0; i<tasks.data.length; i++){
-      const taskName:string = tasks.data[i].task;
-      const isDone:boolean = tasks.data[i].isDone;
-      const newTask:ITask = {taskName, isDone}
-      newItaskArr.unshift(newTask)
+    for (let i = 0; i < tasks.data.length; i++) {
+      const taskName: string = tasks.data[i].task;
+      const isDone: boolean = tasks.data[i].isDone;
+      const newTask: ITask = { taskName, isDone };
+      newItaskArr.unshift(newTask);
     }
     setTodoList(newItaskArr);
-  }
+  };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     console.log(event.target.value);
@@ -45,9 +45,11 @@ const Dashboard: FC = () => {
 
   const addTask = async (value: any) => {
     const newTask = { taskName: value.task, isDone: value.isDone };
-    const response = await axios.post("http://localhost:8000/addtask", value);
-    console.log(response)
-    setTodoList([newTask, ...todoList]);
+    if (value.task!=="") {
+      const response = await axios.post("http://localhost:8000/addtask", value);
+      console.log(response);
+      setTodoList([newTask, ...todoList]);
+    }
     setTask("");
   };
 
@@ -76,7 +78,7 @@ const Dashboard: FC = () => {
                 value={task}
                 onChange={handleChange}
               />
-              <button onClick={()=>addTask({email, task, isDone})}>
+              <button onClick={() => addTask({ email, task, isDone })}>
                 <FaPlus />
               </button>
             </div>
