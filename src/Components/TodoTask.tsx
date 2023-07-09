@@ -17,7 +17,6 @@ const TodoTask = ({ task, completeTask }: Props) => {
     const email = location.state.email;
     const toDelete = task.taskName;
     const response = await axios.post("http://localhost:8000/deleteTask", {email, toDelete});
-    console.log(response);
   };
 
   if (task.taskName !== "") {

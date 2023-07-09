@@ -38,7 +38,6 @@ const Dashboard: FC = () => {
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    console.log(event.target.value);
     if (event.target.name === "name") {
       setTask(event.target.value);
     }
@@ -48,8 +47,7 @@ const Dashboard: FC = () => {
     const newTask = { taskName: value.task, isDone: value.isDone };
     if (value.task !== "") {
       setTodoList([newTask, ...todoList]);
-      const response = await axios.post("http://localhost:8000/addtask", value);
-      console.log(response);
+      await axios.post("http://localhost:8000/addtask", value);
       setTask("");
     }
   };

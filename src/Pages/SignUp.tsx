@@ -13,7 +13,6 @@ const SignUp = () => {
 
   const handleSignup = async (values: any) => {
     const response = await axios.post("http://localhost:8000/signup", values);
-    console.log("response: ", response);
     try {
       if (
         signIn({
@@ -25,7 +24,6 @@ const SignUp = () => {
       )
         navigate("/dashboard", { state: { email: email } });
     } catch (err) {
-      console.log(err);
     }
   };
 
@@ -35,7 +33,6 @@ const SignUp = () => {
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value);
     if (event.target.name === "email") {
       setEmail(event.target.value);
     } else if (event.target.name === "password") {

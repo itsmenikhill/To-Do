@@ -19,9 +19,7 @@ const Login = () => {
   };
 
   const handleLogin = async (values: any) => {
-    console.log("Values", values);
     const response = await axios.post("http://localhost:8000/login", values);
-    console.log("response:", response);
     try {
       if (
         signIn({
@@ -32,11 +30,7 @@ const Login = () => {
         })
       )
         navigate("/dashboard", { state: { email: email } });
-    } catch (err) {
-      if (err) {
-        console.log(err);
-      }
-    }
+    } catch (err) {}
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
