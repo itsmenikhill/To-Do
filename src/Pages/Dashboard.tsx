@@ -6,6 +6,7 @@ import { FaPlus } from "react-icons/fa";
 import LogOut from "../Components/LogOut";
 import { useLocation } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
+import { todo } from "node:test";
 
 const Dashboard: FC = () => {
   const [task, setTask] = useState<string>("");
@@ -45,12 +46,12 @@ const Dashboard: FC = () => {
 
   const addTask = async (value: any) => {
     const newTask = { taskName: value.task, isDone: value.isDone };
-    if (value.task!=="") {
+    if (value.task !== "") {
+      setTodoList([newTask, ...todoList]);
       const response = await axios.post("http://localhost:8000/addtask", value);
       console.log(response);
-      setTodoList([newTask, ...todoList]);
+      setTask("");
     }
-    setTask("");
   };
 
   const completeTask = (taskToDelete: string): void => {
@@ -78,7 +79,11 @@ const Dashboard: FC = () => {
                 value={task}
                 onChange={handleChange}
               />
-              <button onClick={() => addTask({ email, task, isDone })}>
+              <button
+                onClick={() => {
+                  addTask({ email, task, isDone });
+                }}
+              >
                 <FaPlus />
               </button>
             </div>
