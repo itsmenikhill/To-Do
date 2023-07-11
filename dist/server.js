@@ -68,7 +68,7 @@ app.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             user_id: generatedUserId,
             email: sanitizedEmail,
             hashed_password: hashedPassword,
-            tasks: [],
+            tasks: []
         };
         const insertedUser = yield users.insertOne(data);
         const token = jsonwebtoken_1.default.sign(insertedUser, sanitizedEmail, {
@@ -164,3 +164,4 @@ const port = process.env.PORT;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
+//# sourceMappingURL=server.js.map

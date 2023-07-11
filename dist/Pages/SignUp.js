@@ -88,3 +88,4 @@ const SignUp = () => {
                     react_1.default.createElement(react_router_dom_1.Link, { className: "login-link", to: "/login" }, "Already a member? Sign In"))))));
 };
 exports.default = SignUp;
+//# sourceMappingURL=SignUp.js.map

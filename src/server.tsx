@@ -38,7 +38,7 @@ app.post("/signup", async (req, res) => {
       user_id: generatedUserId,
       email: sanitizedEmail,
       hashed_password: hashedPassword,
-      tasks: [],
+      tasks: []
     };
     const insertedUser = await users.insertOne(data);
     const token = jwt.sign(insertedUser, sanitizedEmail, {

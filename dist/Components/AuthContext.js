@@ -42,3 +42,4 @@ const AuthProvider = ({ children }) => {
     return (react_1.default.createElement(AuthContext.Provider, { value: { ValidCreds, token, login, logout } }, children));
 };
 exports.AuthProvider = AuthProvider;
+//# sourceMappingURL=AuthContext.js.map

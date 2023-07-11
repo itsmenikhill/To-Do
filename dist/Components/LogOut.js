@@ -20,3 +20,4 @@ const LogOut = () => {
             react_1.default.createElement(fi_1.FiLogOut, null))));
 };
 exports.default = LogOut;
+//# sourceMappingURL=LogOut.js.map
