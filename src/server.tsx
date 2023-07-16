@@ -23,6 +23,7 @@ app.post("/signup", async (req, res) => {
   const { email, password } = req.body;
   const generatedUserId = uuidv4();
   const hashedPassword = await bcrypt.hash(password, 10);
+  const tasks: any[] = [];
 
   try {
     await client.connect();
@@ -38,7 +39,7 @@ app.post("/signup", async (req, res) => {
       user_id: generatedUserId,
       email: sanitizedEmail,
       hashed_password: hashedPassword,
-      tasks: []
+      tasks: tasks
     };
     const insertedUser = await users.insertOne(data);
     const token = jwt.sign(insertedUser, sanitizedEmail, {
@@ -109,7 +110,7 @@ app.get("/getTasks", async (req, res) => {
     await client.connect();
     const database = client.db("registered");
     const users = database.collection("users");
-    const user = await users.findOne({ email });
+    const user = await users.findOne(email);
     const tasks = user!.tasks;
     res.send(tasks);
   } catch (err) {
@@ -124,7 +125,7 @@ app.post("/deleteTask", async (req, res) => {
     await client.connect();
     const database = client.db("registered");
     const users = database.collection("users");
-    const user = await users.findOne({ email });
+    const user = await users.findOne(email);
     const taskList = user!.tasks;
     console.log(taskList);
     await users
